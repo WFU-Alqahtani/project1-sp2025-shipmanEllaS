@@ -1,6 +1,14 @@
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+/**********************************************************************************************
+ * @file : Main.java
+ * @description : Creates a list of items available in a store and prints a receipt based on
+ *                which items are added to the cart. Exception handling included for missing
+ *                items and invalid inputs.
+ * @author : Ella Shipman
+ * @date : January 28, 2025
+ *********************************************************************************************/
+
 import java.util.ArrayList;
+
 public class Main {
     public void main(String[] args) {
         Item[] store = setUpStore();
@@ -32,7 +40,7 @@ public class Main {
      */
     public ArrayList<Item> createCart (Item[] itemsInStore, String[] args) {
         //Create  array list of cart items
-        ArrayList<Item> cart = new ArrayList<Item>();
+        ArrayList<Item> cart = new ArrayList<>();
 
         //Check to see how many items will be added to cart
         int howManyTotalItems = -1;
@@ -40,10 +48,10 @@ public class Main {
             howManyTotalItems = Integer.parseInt(args[0]);
         } catch (ArrayIndexOutOfBoundsException e){
             System.out.println("Your cart is empty!");
-            System.exit(1);
+            System.exit(0);
         } catch (NumberFormatException e2) {
-            System.out.println("You cannot have \"" + args[0] + "\" items.");
-            System.exit(1);
+            System.out.println("You cannot have \"" + args[0] + "\" items in your cart.");
+            System.exit(0);
         }
         if (args.length != (howManyTotalItems + 1)) {
             System.out.println("You are missing items from your cart!");
@@ -52,16 +60,14 @@ public class Main {
         //Process and add items from args
         for (int i = 1; i <= howManyTotalItems; i++) {
             //Identify item
-            int currentItem = -1;
+            int currentItem;
             try {
                 currentItem = Integer.parseInt(args[i]);
                 cart.add(itemsInStore[currentItem]);
             } catch (ArrayIndexOutOfBoundsException e) {
                 System.out.println("The store does not have an item at index " + args[i] + ".");
-                System.exit(1);
             } catch (NumberFormatException e2) {
                 System.out.println("\"" + args[i] + "\" is not an accepted integer.");
-                System.exit(1);
             }
         }
 
@@ -71,13 +77,13 @@ public class Main {
     //  --------------------------------------------------------------------------------------
 
     /*  --------------------------------------------------------------------------------------
-     *   printReceiptOrder - prints a receipt of all items, prices, subtotal, tax, and total
+     *   printReceiptOrder - prints a receipt of all Items, prices, subtotal, tax, and total
      *   cart : list of items currently in the cart
      */
     public void printReceiptOrder(ArrayList<Item> cart) {
         //Establishing values
         double subtotal = 0.0;
-        double total = 0.0;
+        double total;
 
         //Print header
         System.out.println("Receipt");
@@ -107,7 +113,7 @@ public class Main {
     //  --------------------------------------------------------------------------------------
 
     /*  --------------------------------------------------------------------------------------
-     *   emptyCartReverseOrder - Displays and removes all items in the cart in reverse order
+     *   emptyCartReverseOrder - Displays and removes all Items in the cart in reverse order
      *   cart : list of items currently in the cart
      */
     public void emptyCartReverseOrder(ArrayList<Item> cart) {

@@ -48,10 +48,10 @@ public class Main {
             howManyTotalItems = Integer.parseInt(args[0]);
         } catch (ArrayIndexOutOfBoundsException e){
             System.out.println("Your cart is empty!");
-            System.exit(0);
+            System.exit(1);
         } catch (NumberFormatException e2) {
             System.out.println("You cannot have \"" + args[0] + "\" items in your cart.");
-            System.exit(0);
+            System.exit(1);
         }
         if (args.length != (howManyTotalItems + 1)) {
             System.out.println("You are missing items from your cart!");

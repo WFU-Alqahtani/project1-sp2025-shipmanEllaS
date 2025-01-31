@@ -1,0 +1,13 @@
+/**********************************************************************************************
+ * @file : 6) Big-Oh Question.txt
+ * @description : Answers to part a and part b of question 6 on Lab 1.
+ * @author : Ella Shipman
+ * @date : January 30, 2025
+ *********************************************************************************************/
+
+(a) printReceiptInOrder has a complexity of O(n) because it has one for-loop inside the method, meaning that
+    the number of times the loop iterates scales directly with the size of n. If n is bigger, the loop runs
+    for a longer time. If n is smaller, the loop runs for less time. There are no other loops present, so O(n)
+    is the total complexity of the method.
+(b) emptyCartReverseOrder has a complexity of O(n) because it contains only one for-loop and no other loops.
+    See answer above for an explanation of why one for-loop indicates a complexity of O(n).

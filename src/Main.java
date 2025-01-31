@@ -4,17 +4,17 @@
  *                which items are added to the cart. Exception handling included for missing
  *                items and invalid inputs.
  * @author : Ella Shipman
- * @date : January 28, 2025
+ * @date : January 30, 2025
  *********************************************************************************************/
 
 import java.util.ArrayList;
 
 public class Main {
     public void main(String[] args) {
-        Item[] store = setUpStore();
-        ArrayList<Item> currentCart = createCart(store, args);
-        printReceiptOrder(currentCart);
-        emptyCartReverseOrder(currentCart);
+        Item[] store = setUpStore();                                //Creating store
+        ArrayList<Item> currentCart = createCart(store, args);      //The items in the cart
+        printReceiptInOrder(currentCart);                           //Printing currentCart's items
+        emptyCartReverseOrder(currentCart);                         //Removing currentCart's items
     }
 
     /*  --------------------------------------------------------------------------------------
@@ -42,23 +42,8 @@ public class Main {
         //Create  array list of cart items
         ArrayList<Item> cart = new ArrayList<>();
 
-        //Check to see how many items will be added to cart
-        int howManyTotalItems = -1;
-        try {
-            howManyTotalItems = Integer.parseInt(args[0]);
-        } catch (ArrayIndexOutOfBoundsException e){
-            System.out.println("Your cart is empty!");
-            System.exit(1);
-        } catch (NumberFormatException e2) {
-            System.out.println("You cannot have \"" + args[0] + "\" items in your cart.");
-            System.exit(1);
-        }
-        if (args.length != (howManyTotalItems + 1)) {
-            System.out.println("You are missing items from your cart!");
-        }
-
         //Process and add items from args
-        for (int i = 1; i <= howManyTotalItems; i++) {
+        for (int i = 0; i < args.length; i++) {
             //Identify item
             int currentItem;
             try {
@@ -71,16 +56,22 @@ public class Main {
             }
         }
 
+        //Final check that there are items in cart
+        if (cart.isEmpty()) {
+            System.out.println("No valid input into cart, receipt unavailable.");
+            System.exit(1);
+        }
+
         //Return array list
         return cart;
     }
     //  --------------------------------------------------------------------------------------
 
     /*  --------------------------------------------------------------------------------------
-     *   printReceiptOrder - prints a receipt of all Items, prices, subtotal, tax, and total
+     *   printReceiptInOrder - prints a receipt of all Items, prices, subtotal, tax, and total
      *   cart : list of items currently in the cart
      */
-    public void printReceiptOrder(ArrayList<Item> cart) {
+    public void printReceiptInOrder(ArrayList<Item> cart) {
         //Establishing values
         double subtotal = 0.0;
         double total;
@@ -119,6 +110,7 @@ public class Main {
     public void emptyCartReverseOrder(ArrayList<Item> cart) {
         System.out.println("Removing all items from the cart in reverse order...");
 
+        //Removing items from cart
         for (int i = (cart.size() -1); i >= 0; i--) {
             System.out.println("Removing: " + cart.get(i).getItemName());
             cart.remove(i);
@@ -128,3 +120,26 @@ public class Main {
     }
     //  --------------------------------------------------------------------------------------
 }
+
+
+//<<<<<<<<<<<<<<<<<<<<<<<<<TEST CASES>>>>>>>>>>>>>>>>>>>>>>>>>>>//
+/*  INPUT           SUBTOTAL        TOTAL       EXCEPTION THROWN
+ *  0 1 2 3 4       75.50           79.28       --
+ *  0 1 2 3 5 6     75.50           79.28       The store does not have an item at index 6.
+ *  a 1 2 3 4       52.00           54.60       "a" is not an accepted integer.
+ *  a 1 2 3 5 6     52.00           54.60       "a" is not an accepted integer.
+ *                                              The store does not have an item at index 6.
+ *  0 a 2 3 4       68.00           71.40       "a" is not an accepted integer.
+ *  0 1 a 3 4       54.75           57.49       "a" is not an accepted integer.
+ *  0 1 2 a 4       62.00           65.10       "a" is not an accepted integer.
+ *  0 1 2 3 a       65.25           68.51       "a" is not an accepted integer.
+ *  a a a a 0       23.50           24.68       "a" is not an accepted integer.
+ *                                              "a" is not an accepted integer.
+ *                                              "a" is not an accepted integer.
+ *                                              "a" is not an accepted integer.
+ *  6 6 6 6 0       23.50           24.68       The store does not have an item at index 6.
+ *                                              The store does not have an item at index 6.
+ *                                              The store does not have an item at index 6.
+ *                                              The store does not have an item at index 6.
+ *  *empty line*                                No valid input into cart, receipt unavailable.
+ */
